@@ -1,0 +1,27 @@
+# Local tool context
+CLAUDE.md
+AGENTS.md
+.claude/
+
+# Local artifacts
+/picocron
+/data/
+/local/
+/TODO.local.md
+/TODO.local.yaml
+
+# Local environment and secrets
+.env
+.env.*
+*.local.env
+*.secrets.yaml
+*.secrets.yml
+*.local.yaml
+*.local.yml
+secrets/
+credentials/
+
+# OS/editor noise
+.DS_Store
+*.swp
+*.swo
