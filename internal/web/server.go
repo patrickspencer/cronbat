@@ -14,7 +14,7 @@ import (
 	"github.com/patrickspencer/cronbat/internal/web/ui"
 )
 
-// Server is the HTTP server for the picocron web interface and API.
+// Server is the HTTP server for the cronbat web interface and API.
 type Server struct {
 	httpServer *http.Server
 }

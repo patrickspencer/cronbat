@@ -33,7 +33,7 @@ func (c RunLogConfig) IsEnabled() bool {
 	return *c.Enabled
 }
 
-// Config is the top-level daemon configuration parsed from picocron.yaml.
+// Config is the top-level daemon configuration parsed from cronbat.yaml.
 type Config struct {
 	Listen   string         `yaml:"listen"`
 	DataDir  string         `yaml:"data_dir"`

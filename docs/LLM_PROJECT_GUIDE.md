@@ -1,21 +1,21 @@
-# picocron LLM Project Guide
+# cronbat LLM Project Guide
 
-This file is a compact, model-agnostic guide for LLM agents working on `picocron`.
+This file is a compact, model-agnostic guide for LLM agents working on `cronbat`.
 
 ## Project goal
 
-`picocron` is a lightweight cron daemon with:
+`cronbat` is a lightweight cron daemon with:
 
 - YAML-defined jobs (`jobs/*.yaml`)
-- Embedded SQLite run history (`data/picocron.db`)
+- Embedded SQLite run history (`data/cronbat.db`)
 - REST API (`/api/v1/*`)
 - Built-in minimal web UI (`/ui/`)
 
-The daemon is a single Go binary (`cmd/picocron/main.go`).
+The daemon is a single Go binary (`cmd/cronbat/main.go`).
 
 ## Runtime flow
 
-1. Load daemon config from `picocron.yaml`.
+1. Load daemon config from `cronbat.yaml`.
 2. Ensure `data_dir` exists and open SQLite store.
 3. Load job files from `jobs_dir`.
 4. Build in-memory job map (`name -> *config.Job`).
@@ -23,7 +23,7 @@ The daemon is a single Go binary (`cmd/picocron/main.go`).
 6. Start HTTP server (API + embedded UI).
 7. On signal (`SIGINT`/`SIGTERM`), stop scheduler and shut down HTTP server.
 
-Primary wiring: `cmd/picocron/main.go`.
+Primary wiring: `cmd/cronbat/main.go`.
 
 ## Backend architecture
 
@@ -61,7 +61,7 @@ Primary wiring: `cmd/picocron/main.go`.
   - Optional timeout via context deadline.
   - Captures stdout/stderr with 64KB ring buffers (tail only).
 - `internal/runner/env.go`
-  - Builds env from process env + job env + `PICOCRON_*` metadata vars.
+  - Builds env from process env + job env + `CRONBAT_*` metadata vars.
 
 ### Storage
 
@@ -157,8 +157,8 @@ No frontend build tooling or JS framework is used.
 ## Quick local dev
 
 ```bash
-go build ./cmd/picocron
-./picocron -config picocron.yaml
+go build ./cmd/cronbat
+./cronbat -config cronbat.yaml
 ```
 
 Then open:

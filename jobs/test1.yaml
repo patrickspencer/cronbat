@@ -1,6 +1,6 @@
 name: test1
 schedule: '* * * * *'
-command: echo hello from picocron
+command: echo hello from cronbat
 working_dir: ""
 executor: shell
 timeout: ""

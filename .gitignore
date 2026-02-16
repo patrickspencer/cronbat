@@ -5,6 +5,7 @@ AGENTS.md
 
 # Local artifacts
 /picocron
+/cronbat
 /data/
 /local/
 /TODO.local.md

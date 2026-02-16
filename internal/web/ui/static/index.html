@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>picocron jobs</title>
+  <title>cronbat jobs</title>
   <link rel="stylesheet" href="/ui/styles.css">
 </head>
 <body>
   <div class="app-shell">
     <aside class="sidebar">
-      <h2>picocron</h2>
+      <h2>cronbat</h2>
       <nav class="sidebar-nav">
         <a class="active" href="/ui/">View All Jobs</a>
         <a href="/ui/new.html">Make New Job</a>
-        <a href="/ui/settings.html">Picocron Settings</a>
+        <a href="/ui/settings.html">Cronbat Settings</a>
       </nav>
     </aside>
 
     <main class="workspace">
-      <section class="container">
+      <section class="container dashboard-page">
         <header class="page-header">
           <div>
             <h1>Job Dashboard</h1>
@@ -31,24 +31,26 @@
 
         <p id="status" class="status" aria-live="polite"></p>
 
-        <section class="card">
-          <table class="jobs-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Run Status</th>
-                <th>Actions</th>
-                <th>Schedule</th>
-                <th>Command</th>
-              </tr>
-            </thead>
-            <tbody id="jobs-body">
-              <tr>
-                <td colspan="6">Loading jobs...</td>
-              </tr>
-            </tbody>
-          </table>
+        <section class="card table-card">
+          <div class="table-scroll">
+            <table class="jobs-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Status</th>
+                  <th>Run Status</th>
+                  <th>Actions</th>
+                  <th>Schedule</th>
+                  <th>Command</th>
+                </tr>
+              </thead>
+              <tbody id="jobs-body">
+                <tr>
+                  <td colspan="6">Loading jobs...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
       </section>
     </main>

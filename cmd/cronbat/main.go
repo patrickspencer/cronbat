@@ -26,7 +26,7 @@ import (
 )
 
 func main() {
-	configPath := flag.String("config", "picocron.yaml", "path to configuration file")
+	configPath := flag.String("config", "cronbat.yaml", "path to configuration file")
 	flag.Parse()
 
 	cfg, err := config.LoadConfig(*configPath)
@@ -41,7 +41,7 @@ func main() {
 	}
 
 	// Open SQLite store.
-	dbPath := filepath.Join(cfg.DataDir, "picocron.db")
+	dbPath := filepath.Join(cfg.DataDir, "cronbat.db")
 	st, err := store.NewSQLiteStore(dbPath)
 	if err != nil {
 		log.Fatalf("failed to open store: %v", err)
@@ -763,7 +763,7 @@ func main() {
 		}
 	}()
 
-	log.Printf("picocron started, listening on %s", cfg.Listen)
+	log.Printf("cronbat started, listening on %s", cfg.Listen)
 
 	<-sigCh
 	log.Println("shutting down...")
@@ -777,5 +777,5 @@ func main() {
 		log.Printf("ERROR: http server shutdown error: %v", err)
 	}
 
-	log.Println("picocron stopped")
+	log.Println("cronbat stopped")
 }

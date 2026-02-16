@@ -37,13 +37,24 @@ p {
 
 .container {
   width: min(1300px, 97vw);
+  max-width: 100%;
   margin: 0 auto;
   display: grid;
   gap: 14px;
 }
 
+.container.dashboard-page {
+  width: 100%;
+  margin: 0;
+}
+
 .container.job-page {
   width: min(1280px, 100%);
+  margin: 0;
+}
+
+.container.run-page {
+  width: 100%;
   margin: 0;
 }
 
@@ -131,6 +142,15 @@ p {
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
 }
 
+.table-card {
+  padding: 0;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
 .job-main .card {
   max-width: 860px;
 }
@@ -174,6 +194,7 @@ button:disabled {
 
 .jobs-table {
   width: 100%;
+  min-width: 1080px;
   border-collapse: collapse;
   font-size: 14px;
 }
@@ -194,6 +215,8 @@ button:disabled {
 .jobs-table td code {
   font-size: 12px;
   color: #f1fa8c;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .jobs-table th:nth-child(2),
@@ -375,6 +398,20 @@ button:disabled {
   gap: 14px;
 }
 
+.run-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.run-layout .card {
+  min-width: 0;
+}
+
+.run-meta-card {
+  grid-column: 1 / -1;
+}
+
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -458,8 +495,8 @@ textarea:focus {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px;
-  min-height: 100px;
-  max-height: 280px;
+  min-height: 180px;
+  max-height: min(52vh, 520px);
   overflow: auto;
   font-size: 12px;
   line-height: 1.4;
@@ -672,6 +709,10 @@ textarea:focus {
   }
 
   .logs-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .run-layout {
     grid-template-columns: 1fr;
   }
 

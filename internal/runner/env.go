@@ -8,7 +8,7 @@ import (
 
 // BuildEnv constructs the environment variable slice for a job execution.
 // It starts with the current process environment, overlays job-specific
-// variables, and adds PICOCRON_* variables.
+// variables, and adds CRONBAT_* variables.
 func BuildEnv(base map[string]string, job plugin.JobContext) []string {
 	// Start with current environment in a map for easy overlay.
 	envMap := make(map[string]string)
@@ -31,9 +31,9 @@ func BuildEnv(base map[string]string, job plugin.JobContext) []string {
 		envMap[k] = v
 	}
 
-	// Add picocron metadata.
-	envMap["PICOCRON_JOB_NAME"] = job.JobName
-	envMap["PICOCRON_TRIGGER"] = job.Trigger
+	// Add cronbat metadata.
+	envMap["CRONBAT_JOB_NAME"] = job.JobName
+	envMap["CRONBAT_TRIGGER"] = job.Trigger
 
 	// Convert to slice.
 	result := make([]string, 0, len(envMap))

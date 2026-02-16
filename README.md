@@ -2,8 +2,6 @@
 
 Cronbat is a lightweight cron job daemon in Go with a built-in API and web UI.
 
-Current binary name is `picocron` for compatibility during rename.
-
 ## One-line Description
 
 Run, schedule, observe, and manage background tasks from a single small Go binary.
@@ -33,12 +31,12 @@ All screenshots are from the built-in UI (`/ui/`).
 ```bash
 git clone git@github.com:patrickspencer/cronbat.git
 cd cronbat
-go build ./cmd/picocron
+go build ./cmd/cronbat
 ```
 
 ### 2) Configure daemon
 
-`picocron.yaml`:
+`cronbat.yaml`:
 
 ```yaml
 listen: ":8080"
@@ -67,7 +65,7 @@ command: "echo hello from cronbat"
 ### 4) Run
 
 ```bash
-./picocron -config picocron.yaml
+./cronbat -config cronbat.yaml
 ```
 
 Open:
@@ -111,7 +109,7 @@ Runs/system:
 
 ## Project Layout
 
-- `cmd/picocron/main.go`: daemon bootstrap and wiring
+- `cmd/cronbat/main.go`: daemon bootstrap and wiring
 - `internal/config/`: daemon and job YAML handling
 - `internal/scheduler/`: cron scheduling engine
 - `internal/runner/`: command execution and output capture
@@ -129,7 +127,7 @@ Runs/system:
 
 ```bash
 go test ./...
-go build ./cmd/picocron
+go build ./cmd/cronbat
 ```
 
 4. Update docs when behavior changes (API/UI/config).
