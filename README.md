@@ -22,7 +22,7 @@ All screenshots are from the built-in UI (`/ui/`).
 
 ![Jobs dashboard](docs/screenshots/jobs.png)
 ![Job details](docs/screenshots/job-details.png)
-![Job logs](docs/screenshots/job-logs.png)
+![Job logs (responsive layout)](docs/screenshots/job-logs.png)
 
 ## Quick Start
 
