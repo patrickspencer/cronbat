@@ -107,6 +107,10 @@ Runs/system:
 - `GET /api/v1/stats`
 - `GET /api/v1/health`
 
+API onboarding guide:
+
+- `docs/API_TASK_ONBOARDING.md`: how another program can create a job, trigger a test run, and verify output.
+
 ## Project Layout
 
 - `cmd/cronbat/main.go`: daemon bootstrap and wiring
@@ -117,6 +121,7 @@ Runs/system:
 - `internal/runlog/`: persisted run log files and cleanup
 - `internal/web/api/`: REST handlers
 - `internal/web/ui/`: embedded static UI
+- `docs/API_TASK_ONBOARDING.md`: onboarding workflow for external programs using the API
 - `docs/LLM_PROJECT_GUIDE.md`: model-agnostic backend guide
 
 ## Contributing
