@@ -1,6 +1,6 @@
 listen: ":8080"
 data_dir: "./data"
-jobs_dir: "./jobs"
+jobs_dir: "~/.config/cronbat/jobs"
 log_level: "info"
 run_logs:
   enabled: true

@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"path/filepath"
+	"strings"
 
 	"gopkg.in/yaml.v3"
 )
@@ -50,14 +51,18 @@ func applyDefaults(c *Config) {
 	if c.DataDir == "" {
 		c.DataDir = "./data"
 	}
+	c.DataDir = expandPath(c.DataDir)
 	if c.JobsDir == "" {
-		c.JobsDir = "./jobs"
+		c.JobsDir = defaultJobsDir()
 	}
+	c.JobsDir = expandPath(c.JobsDir)
 	if c.LogLevel == "" {
 		c.LogLevel = "info"
 	}
 	if c.RunLogs.Dir == "" {
 		c.RunLogs.Dir = filepath.Join(c.DataDir, "logs")
+	} else {
+		c.RunLogs.Dir = expandPath(c.RunLogs.Dir)
 	}
 	if c.RunLogs.MaxBytesPerStream <= 0 {
 		c.RunLogs.MaxBytesPerStream = 256 * 1024 // 256KB
@@ -75,6 +80,39 @@ func applyDefaults(c *Config) {
 		t := true
 		c.RunLogs.Enabled = &t
 	}
+}
+
+func defaultJobsDir() string {
+	home, err := os.UserHomeDir()
+	if err != nil || strings.TrimSpace(home) == "" {
+		return "./jobs"
+	}
+	return filepath.Join(home, ".config", "cronbat", "jobs")
+}
+
+func expandPath(value string) string {
+	v := strings.TrimSpace(value)
+	if v == "" {
+		return value
+	}
+
+	v = os.ExpandEnv(v)
+
+	home, err := os.UserHomeDir()
+	if err != nil || strings.TrimSpace(home) == "" {
+		return v
+	}
+
+	if v == "~" {
+		return home
+	}
+	if strings.HasPrefix(v, "~/") {
+		return filepath.Join(home, v[2:])
+	}
+	if strings.HasPrefix(v, "~\\") {
+		return filepath.Join(home, v[2:])
+	}
+	return v
 }
 
 // LoadConfig reads a YAML configuration file from path and returns

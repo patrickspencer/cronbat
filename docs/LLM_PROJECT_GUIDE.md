@@ -34,7 +34,7 @@ Primary wiring: `cmd/cronbat/main.go`.
   - Applies defaults:
     - `listen: :8080`
     - `data_dir: ./data`
-    - `jobs_dir: ./jobs`
+    - `jobs_dir: ~/.config/cronbat/jobs`
     - `log_level: info`
     - `run_logs`: enabled with conservative retention/size defaults
 - `internal/config/job.go`
@@ -94,6 +94,8 @@ Jobs:
 
 - `POST /api/v1/jobs` (create)
 - `GET /api/v1/jobs`
+- `GET /api/v1/jobs/export` (all jobs as multi-document YAML)
+- `POST /api/v1/jobs/import` (import jobs from multi-document YAML; supports `dry_run`/`replace`)
 - `GET /api/v1/jobs/{name}`
 - `PUT /api/v1/jobs/{name}` (update settings)
 - `DELETE /api/v1/jobs/{name}`

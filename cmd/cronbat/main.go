@@ -39,6 +39,9 @@ func main() {
 	if err := os.MkdirAll(cfg.DataDir, 0755); err != nil {
 		log.Fatalf("failed to create data directory %s: %v", cfg.DataDir, err)
 	}
+	if err := os.MkdirAll(cfg.JobsDir, 0755); err != nil {
+		log.Fatalf("failed to create jobs directory %s: %v", cfg.JobsDir, err)
+	}
 
 	// Open SQLite store.
 	dbPath := filepath.Join(cfg.DataDir, "cronbat.db")

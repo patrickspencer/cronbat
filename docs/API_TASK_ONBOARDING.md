@@ -78,6 +78,38 @@ Look at:
 4. Poll `GET /api/v1/runs?job={name}&limit=1` until not `running`
 5. `GET /api/v1/runs/{id}/logs`
 
+## Backup and Restore Jobs as YAML
+
+Export all jobs as one multi-document YAML:
+
+```bash
+curl http://localhost:8080/api/v1/jobs/export > jobs-backup.yaml
+```
+
+Preview an import without applying changes:
+
+```bash
+curl -X POST "http://localhost:8080/api/v1/jobs/import?dry_run=true" \
+  -H "Content-Type: application/x-yaml" \
+  --data-binary @jobs-backup.yaml
+```
+
+Import jobs (create new, update existing):
+
+```bash
+curl -X POST http://localhost:8080/api/v1/jobs/import \
+  -H "Content-Type: application/x-yaml" \
+  --data-binary @jobs-backup.yaml
+```
+
+Replace all existing jobs with backup content:
+
+```bash
+curl -X POST "http://localhost:8080/api/v1/jobs/import?replace=true" \
+  -H "Content-Type: application/x-yaml" \
+  --data-binary @jobs-backup.yaml
+```
+
 ## Common Errors
 
 - `400`: invalid payload (missing required fields or invalid schedule)

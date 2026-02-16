@@ -37,6 +37,8 @@ type API struct {
 
 // RegisterRoutes registers all API routes on the given ServeMux.
 func (a *API) RegisterRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("/api/v1/jobs/export", a.handleExportJobs)
+	mux.HandleFunc("/api/v1/jobs/import", a.handleImportJobs)
 	mux.HandleFunc("/api/v1/jobs/", a.routeJobs)
 	mux.HandleFunc("/api/v1/jobs", a.handleListJobs)
 	mux.HandleFunc("/api/v1/runs/", a.routeRuns)

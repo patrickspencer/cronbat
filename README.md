@@ -41,7 +41,7 @@ go build ./cmd/cronbat
 ```yaml
 listen: ":8080"
 data_dir: "./data"
-jobs_dir: "./jobs"
+jobs_dir: "~/.config/cronbat/jobs"
 log_level: "info"
 run_logs:
   enabled: true
@@ -51,6 +51,9 @@ run_logs:
   max_total_mb: 128
   cleanup_interval: "1h"
 ```
+
+`jobs_dir` defaults to `~/.config/cronbat/jobs` if unset.
+Cronbat creates the jobs directory on startup if it does not exist.
 
 ### 3) Add a job
 
@@ -88,6 +91,8 @@ Jobs:
 
 - `POST /api/v1/jobs`
 - `GET /api/v1/jobs`
+- `GET /api/v1/jobs/export`
+- `POST /api/v1/jobs/import` (`?dry_run=true`, `?replace=true`)
 - `GET /api/v1/jobs/{name}`
 - `PUT /api/v1/jobs/{name}`
 - `DELETE /api/v1/jobs/{name}`
@@ -110,6 +115,7 @@ Runs/system:
 API onboarding guide:
 
 - `docs/API_TASK_ONBOARDING.md`: how another program can create a job, trigger a test run, and verify output.
+- `docs/JOB_STORAGE.md`: how jobs are stored in YAML and how Cronbat uses the jobs folder.
 
 ## Project Layout
 
@@ -121,6 +127,7 @@ API onboarding guide:
 - `internal/runlog/`: persisted run log files and cleanup
 - `internal/web/api/`: REST handlers
 - `internal/web/ui/`: embedded static UI
+- `docs/JOB_STORAGE.md`: YAML job storage and jobs folder behavior
 - `docs/API_TASK_ONBOARDING.md`: onboarding workflow for external programs using the API
 - `docs/LLM_PROJECT_GUIDE.md`: model-agnostic backend guide
 
