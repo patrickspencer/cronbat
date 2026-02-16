@@ -15,6 +15,8 @@ Run, schedule, observe, and manage background tasks from a single small Go binar
 - Exposes REST endpoints for job and run management
 - Serves a dependency-light web UI from the same process
 - Streams realtime updates to the UI via Server-Sent Events
+- Integrates with system cron via `cronbat wrap` for visibility into cron-scheduled jobs
+- Syncs jobs to/from system crontab with `cronbat cron-sync`
 
 ## Screenshots
 
@@ -76,6 +78,29 @@ Open:
 - UI: `http://localhost:8080/ui/`
 - Health: `http://localhost:8080/api/v1/health`
 
+## Cron Integration
+
+The same `cronbat` binary includes subcommands for integrating with system cron:
+
+```bash
+# Run a command and record it in cronbat's DB (works without daemon)
+cronbat wrap --name backup --config cronbat.yaml -- backup.sh --full
+
+# Push cronbat jobs into system crontab
+cronbat cron-sync install --config cronbat.yaml
+
+# Preview what would be installed
+cronbat cron-sync install --config cronbat.yaml --dry-run
+
+# Import #cronbat-tagged crontab entries as cronbat jobs
+cronbat cron-sync import --config cronbat.yaml
+
+# Health check for use in crontab watchdog
+cronbat watchdog --api http://localhost:8080
+```
+
+See `docs/CRON_INTEGRATION.md` for full patterns and examples.
+
 ## Web UI Pages
 
 - `/ui/`: all jobs dashboard
@@ -119,7 +144,10 @@ API onboarding guide:
 
 ## Project Layout
 
-- `cmd/cronbat/main.go`: daemon bootstrap and wiring
+- `cmd/cronbat/main.go`: daemon bootstrap, wiring, and subcommand dispatch
+- `cmd/cronbat/wrap.go`: `cronbat wrap` subcommand (run + record)
+- `cmd/cronbat/cronsync.go`: `cronbat cron-sync` subcommand (install/import)
+- `cmd/cronbat/watchdog.go`: `cronbat watchdog` subcommand (health check)
 - `internal/config/`: daemon and job YAML handling
 - `internal/scheduler/`: cron scheduling engine
 - `internal/runner/`: command execution and output capture
@@ -129,6 +157,7 @@ API onboarding guide:
 - `internal/web/ui/`: embedded static UI
 - `docs/JOB_STORAGE.md`: YAML job storage and jobs folder behavior
 - `docs/API_TASK_ONBOARDING.md`: onboarding workflow for external programs using the API
+- `docs/CRON_INTEGRATION.md`: cron integration patterns and examples
 - `docs/LLM_PROJECT_GUIDE.md`: model-agnostic backend guide
 
 ## Contributing

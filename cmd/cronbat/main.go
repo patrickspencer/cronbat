@@ -26,6 +26,18 @@ import (
 )
 
 func main() {
+	// Check for subcommands before flag parsing.
+	if len(os.Args) > 1 {
+		switch os.Args[1] {
+		case "wrap":
+			os.Exit(runWrap(os.Args[2:]))
+		case "cron-sync":
+			os.Exit(runCronSync(os.Args[2:]))
+		case "watchdog":
+			os.Exit(runWatchdog(os.Args[2:]))
+		}
+	}
+
 	configPath := flag.String("config", "cronbat.yaml", "path to configuration file")
 	flag.Parse()
 

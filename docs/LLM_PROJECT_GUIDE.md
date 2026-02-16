@@ -11,19 +11,33 @@ This file is a compact, model-agnostic guide for LLM agents working on `cronbat`
 - REST API (`/api/v1/*`)
 - Built-in minimal web UI (`/ui/`)
 
-The daemon is a single Go binary (`cmd/cronbat/main.go`).
+The daemon is a single Go binary (`cmd/cronbat/main.go`). The same binary also
+provides CLI subcommands (`wrap`, `cron-sync`, `watchdog`) for system cron integration.
 
 ## Runtime flow
 
-1. Load daemon config from `cronbat.yaml`.
-2. Ensure `data_dir` exists and open SQLite store.
-3. Load job files from `jobs_dir`.
-4. Build in-memory job map (`name -> *config.Job`).
-5. Start scheduler for enabled jobs.
-6. Start HTTP server (API + embedded UI).
-7. On signal (`SIGINT`/`SIGTERM`), stop scheduler and shut down HTTP server.
+1. Check for subcommands (`wrap`, `cron-sync`, `watchdog`) and dispatch if matched.
+2. Load daemon config from `cronbat.yaml`.
+3. Ensure `data_dir` exists and open SQLite store.
+4. Load job files from `jobs_dir`.
+5. Build in-memory job map (`name -> *config.Job`).
+6. Start scheduler for enabled jobs.
+7. Start HTTP server (API + embedded UI).
+8. On signal (`SIGINT`/`SIGTERM`), stop scheduler and shut down HTTP server.
 
 Primary wiring: `cmd/cronbat/main.go`.
+
+## CLI subcommands
+
+Subcommands are dispatched before daemon startup in `main()`.
+
+- `cmd/cronbat/wrap.go` — `cronbat wrap`: runs a command and records it in the DB.
+  Works without the daemon (direct SQLite access) or via API (`--api` flag).
+- `cmd/cronbat/cronsync.go` — `cronbat cron-sync install|import`: syncs jobs to/from system crontab.
+  Managed crontab section uses `# --- cronbat managed begin/end ---` markers and `#cronbat` per-line tags.
+- `cmd/cronbat/watchdog.go` — `cronbat watchdog`: health checks the daemon, optionally restarts it.
+
+See `docs/CRON_INTEGRATION.md` for full usage patterns.
 
 ## Backend architecture
 
