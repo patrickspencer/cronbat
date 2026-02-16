@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>picocron jobs</title>
+  <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <h2>picocron</h2>
+      <nav class="sidebar-nav">
+        <a class="active" href="/ui/">View All Jobs</a>
+        <a href="/ui/new.html">Make New Job</a>
+        <a href="/ui/settings.html">Picocron Settings</a>
+      </nav>
+    </aside>
+
+    <main class="workspace">
+      <section class="container">
+        <header class="page-header">
+          <div>
+            <h1>Job Dashboard</h1>
+            <div class="header-actions header-actions-inline">
+              <a class="button-link" href="/ui/new.html">New Job</a>
+              <button id="refresh-btn" type="button">Refresh</button>
+            </div>
+          </div>
+        </header>
+
+        <p id="status" class="status" aria-live="polite"></p>
+
+        <section class="card">
+          <table class="jobs-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Run Status</th>
+                <th>Actions</th>
+                <th>Schedule</th>
+                <th>Command</th>
+              </tr>
+            </thead>
+            <tbody id="jobs-body">
+              <tr>
+                <td colspan="6">Loading jobs...</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <div id="delete-modal" class="delete-modal" aria-hidden="true">
+    <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+      <h2 id="delete-modal-title">Confirm Delete</h2>
+      <p>Type <code>delete</code> to permanently remove this job:</p>
+      <p class="mono" id="delete-job-name">-</p>
+      <label>
+        Confirmation
+        <input id="delete-confirm-input" type="text" autocomplete="off" placeholder="type delete">
+      </label>
+      <div class="delete-modal-actions">
+        <button id="delete-cancel-btn" type="button">Cancel</button>
+        <button id="delete-confirm-btn" type="button" class="danger" disabled>
+          <span class="trash-icon" aria-hidden="true">🗑</span>
+          Delete Job
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/ui/index.js" defer></script>
+</body>
+</html>

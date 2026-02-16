@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>picocron job editor</title>
+  <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <h2>picocron</h2>
+      <nav class="sidebar-nav">
+        <a class="active" href="/ui/">View All Jobs</a>
+        <a href="/ui/new.html">Make New Job</a>
+        <a href="/ui/settings.html">Picocron Settings</a>
+      </nav>
+    </aside>
+
+    <main class="workspace">
+      <section class="container job-page">
+        <header class="page-header">
+          <div>
+            <h1 id="job-title">Job</h1>
+            <p class="subtitle">Settings + YAML</p>
+          </div>
+        </header>
+
+        <p id="status" class="status" aria-live="polite"></p>
+
+        <nav class="subnav">
+          <a id="job-settings-link" class="active" href="#">Job Settings</a>
+          <a id="job-logs-link" href="/ui/">Job Logs</a>
+        </nav>
+
+        <div class="job-detail-layout">
+          <section class="job-main">
+            <section class="card job-card">
+              <h2>Settings</h2>
+              <form id="settings-form" class="settings-form">
+                <div class="form-section">
+                  <div class="top-toggle-row">
+                    <label class="inline enabled-pill">
+                      <input id="enabled" type="checkbox">
+                      Enabled
+                    </label>
+                  </div>
+
+                  <label>
+                    Name
+                    <input id="name" type="text" readonly>
+                  </label>
+
+                  <label>
+                    Schedule
+                    <input id="schedule" type="text" required>
+                  </label>
+
+                  <label>
+                    Command
+                    <textarea id="command" rows="4" required></textarea>
+                  </label>
+
+                  <label>
+                    Working Directory
+                    <input id="working-dir" type="text" placeholder="/opt/scripts">
+                  </label>
+
+                  <div class="grid two compact-grid">
+                    <label>
+                      Executor
+                      <input id="executor" type="text">
+                    </label>
+                    <label>
+                      Timeout
+                      <input id="timeout" type="text" placeholder="e.g. 30s, 5m">
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-section">
+                  <label>
+                    Environment (one `KEY=value` per line)
+                    <textarea id="env" rows="5" placeholder="FOO=bar"></textarea>
+                  </label>
+
+                  <label>
+                    On Success notifiers (one per line)
+                    <textarea id="on-success" rows="3"></textarea>
+                  </label>
+
+                  <label>
+                    On Failure notifiers (one per line)
+                    <textarea id="on-failure" rows="3"></textarea>
+                  </label>
+
+                  <label>
+                    Metadata (JSON object)
+                    <textarea id="metadata" rows="4" placeholder="{&quot;team&quot;:&quot;ops&quot;}"></textarea>
+                  </label>
+                </div>
+
+                <div class="actions">
+                  <button id="save-settings" type="submit">Save Settings</button>
+                  <button id="reload-settings" type="button">Reload</button>
+                </div>
+              </form>
+            </section>
+
+            <section class="card">
+              <h2>Raw YAML</h2>
+              <textarea id="yaml" rows="20" class="yaml-editor"></textarea>
+              <div class="actions">
+                <button id="save-yaml" type="button">Save YAML</button>
+                <button id="reload-yaml" type="button">Reload YAML</button>
+              </div>
+            </section>
+          </section>
+
+          <aside class="job-side">
+            <section class="card">
+              <h2>Job Snapshot</h2>
+              <dl class="kv-list">
+                <dt>State</dt>
+                <dd id="side-state">-</dd>
+                <dt>Next Run</dt>
+                <dd id="side-next-run">-</dd>
+                <dt>Working Dir</dt>
+                <dd id="side-working-dir">-</dd>
+                <dt>Executor</dt>
+                <dd id="side-executor">-</dd>
+              </dl>
+              <div class="actions">
+                <a id="side-all-jobs-link" class="button-link sidebar-back-link" href="/ui/">All Jobs</a>
+                <a id="side-logs-link" class="button-link" href="/ui/">Open Logs</a>
+                <button id="side-copy-btn" type="button">Copy Job</button>
+                <button id="side-delete-btn" type="button" class="danger">
+                  <span class="trash-icon" aria-hidden="true">🗑</span>
+                  Delete Job
+                </button>
+              </div>
+            </section>
+
+            <section class="card">
+              <h2>Cron + Field Help</h2>
+              <div class="help-block mono">
+                <p><strong>Cron format:</strong> <code>minute hour day-of-month month day-of-week</code></p>
+                <p><strong>Examples:</strong></p>
+                <p><code>* * * * *</code> every minute</p>
+                <p><code>*/5 * * * *</code> every 5 minutes</p>
+                <p><code>0 * * * *</code> every hour (at minute 0)</p>
+                <p><code>0 2 * * *</code> daily at 2:00 AM</p>
+                <p><code>0 0 * * 0</code> every Sunday at midnight</p>
+                <p><code>@daily</code>, <code>@hourly</code>, <code>@weekly</code> shortcuts are supported.</p>
+                <p><strong>Other fields:</strong></p>
+                <p><code>working_dir</code>: run command from this folder instead of process root.</p>
+                <p><code>timeout</code>: Go duration like <code>30s</code>, <code>5m</code>, <code>1h</code>.</p>
+                <p><code>env</code>: key-value vars passed to the command.</p>
+                <p><code>on_success</code>/<code>on_failure</code>: notifier names (future plugin hooks).</p>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="delete-modal" class="delete-modal" aria-hidden="true">
+    <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+      <h2 id="delete-modal-title">Confirm Delete</h2>
+      <p>Type <code>delete</code> to permanently remove this job:</p>
+      <p class="mono" id="delete-job-name">-</p>
+      <label>
+        Confirmation
+        <input id="delete-confirm-input" type="text" autocomplete="off" placeholder="type delete">
+      </label>
+      <div class="delete-modal-actions">
+        <button id="delete-cancel-btn" type="button">Cancel</button>
+        <button id="delete-confirm-btn" type="button" class="danger" disabled>
+          <span class="trash-icon" aria-hidden="true">🗑</span>
+          Delete Job
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/ui/job.js" defer></script>
+</body>
+</html>

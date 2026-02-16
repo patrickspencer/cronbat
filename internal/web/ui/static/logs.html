@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>picocron logs</title>
+  <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <h2>picocron</h2>
+      <nav class="sidebar-nav">
+        <a class="active" href="/ui/">View All Jobs</a>
+        <a href="/ui/new.html">Make New Job</a>
+        <a href="/ui/settings.html">Picocron Settings</a>
+      </nav>
+    </aside>
+
+    <main class="workspace">
+      <section class="container">
+        <header class="page-header">
+          <div>
+            <h1 id="job-title">Job Logs</h1>
+            <p class="subtitle">Run history and output</p>
+          </div>
+        </header>
+
+        <p id="status" class="status" aria-live="polite"></p>
+
+        <nav class="subnav">
+          <a id="job-settings-link" href="/ui/">Job Settings</a>
+          <a id="job-logs-link" class="active" href="#">Job Logs</a>
+        </nav>
+
+        <div class="logs-layout">
+          <section class="card">
+            <div class="table-toolbar">
+              <div>
+                <h2>Runs</h2>
+                <p class="subtitle">Click a row to inspect stdout/stderr.</p>
+              </div>
+              <div class="toolbar-controls">
+                <label class="compact-field">
+                  Run limit
+                  <select id="limit">
+                    <option value="20">20</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                    <option value="200">200</option>
+                  </select>
+                </label>
+                <button id="refresh-btn" type="button" class="mini-btn">Refresh</button>
+              </div>
+            </div>
+
+            <table class="runs-table">
+              <thead>
+                <tr>
+                  <th>Started</th>
+                  <th>Status</th>
+                  <th>Trigger</th>
+                  <th>Duration</th>
+                  <th>Exit</th>
+                  <th>View</th>
+                </tr>
+              </thead>
+              <tbody id="runs-body">
+                <tr>
+                  <td colspan="6">Loading runs...</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section class="card">
+            <h2>Run Detail</h2>
+            <p id="run-meta" class="subtitle">Select a run to inspect logs.</p>
+
+            <label>
+              Stdout
+              <pre id="stdout" class="log-block"></pre>
+            </label>
+
+            <label>
+              Stderr
+              <pre id="stderr" class="log-block"></pre>
+            </label>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/ui/logs.js" defer></script>
+</body>
+</html>

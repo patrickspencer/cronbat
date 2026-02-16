@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>picocron run log</title>
+  <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <h2>picocron</h2>
+      <nav class="sidebar-nav">
+        <a class="active" href="/ui/">View All Jobs</a>
+        <a href="/ui/new.html">Make New Job</a>
+        <a href="/ui/settings.html">Picocron Settings</a>
+      </nav>
+    </aside>
+
+    <main class="workspace">
+      <section class="container">
+        <header class="page-header">
+          <div>
+            <h1 id="run-title">Run</h1>
+            <p id="run-subtitle" class="subtitle">Run details</p>
+          </div>
+        </header>
+
+        <p id="status" class="status" aria-live="polite"></p>
+
+        <nav class="subnav">
+          <a id="run-settings-link" href="/ui/">Job Settings</a>
+          <a id="run-logs-link" href="/ui/">Job Logs</a>
+          <a id="run-detail-link" class="active" href="#">Run Detail</a>
+        </nav>
+
+        <section class="card">
+          <h2>Metadata</h2>
+          <div id="meta" class="mono"></div>
+        </section>
+
+        <section class="card">
+          <h2>Stdout</h2>
+          <pre id="stdout" class="log-block"></pre>
+        </section>
+
+        <section class="card">
+          <h2>Stderr</h2>
+          <pre id="stderr" class="log-block"></pre>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="/ui/run.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>picocron settings</title>
+  <link rel="stylesheet" href="/ui/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <h2>picocron</h2>
+      <nav class="sidebar-nav">
+        <a href="/ui/">View All Jobs</a>
+        <a href="/ui/new.html">Make New Job</a>
+        <a class="active" href="/ui/settings.html">Picocron Settings</a>
+      </nav>
+    </aside>
+
+    <main class="workspace">
+      <section class="container">
+        <header class="page-header">
+          <div>
+            <h1>Picocron Settings</h1>
+            <p class="subtitle">Daemon configuration and runtime status</p>
+          </div>
+        </header>
+
+        <p id="status" class="status" aria-live="polite"></p>
+
+        <section class="card">
+          <h2>Health + Stats</h2>
+          <pre id="stats" class="log-block"></pre>
+        </section>
+
+        <section class="card">
+          <h2>Current Config</h2>
+          <pre id="config" class="log-block"></pre>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="/ui/settings.js" defer></script>
+</body>
+</html>

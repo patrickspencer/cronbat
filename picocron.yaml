@@ -1,0 +1,11 @@
+listen: ":8080"
+data_dir: "./data"
+jobs_dir: "./jobs"
+log_level: "info"
+run_logs:
+  enabled: true
+  dir: "./data/logs"
+  max_bytes_per_stream: 262144
+  retention_days: 7
+  max_total_mb: 128
+  cleanup_interval: "1h"

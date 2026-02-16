@@ -1,0 +1,12 @@
+name: test1
+schedule: '* * * * *'
+command: echo hello from picocron
+working_dir: ""
+executor: shell
+timeout: ""
+env: {}
+enabled: true
+on_success: []
+on_failure: []
+analyze: null
+metadata: {}
